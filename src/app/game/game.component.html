@@ -1,7 +1,12 @@
 <div class="game-field">
 
     <div class="card-stack">
+
         <img *ngFor="let c of [1, 2 , 3 , 4, 5]; let i = index;" [ngStyle]="{'right.px': i * 6 - 90 }" class="card" src="assets/img/cards/card_cover.png">
+        
+        <!-- animated card -->
+        <img (click)="takeCard()" [class.draw-card]="drawingCard" class="card top-card" src="assets/img/cards/card_cover.png">
+
     </div>
 
 </div>

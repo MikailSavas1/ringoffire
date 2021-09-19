@@ -12,9 +12,25 @@
 
 .card-stack {
     position: relative;
+    margin-bottom: 200px;
 
     .card {
         width   : 180px;
         position: absolute;
     }
+}
+
+.top-card{
+    right: -60px;
+    cursor: pointer;
+    transition: transform 225ms ease-out;
+    
+    &:hover{
+        transform: translate(-5px ,-20px);
+    }
+}
+
+.draw-card{
+    transition: transform 225ms ease-out;
+    transform: scale(1.35) translate(-50px , -20px) !important;
 }
