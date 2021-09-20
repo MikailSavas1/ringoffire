@@ -8,8 +8,10 @@ import { Game } from '../models/game';
 })
 export class GameComponent implements OnInit {
 
-  drawingCard = false;
+  drawingCard = false; // animation
+
   game: Game = new Game();
+  currentCard = this.game.stack.pop(); // Frage: Wiesoo kann ich hier keine leeren Werte lassen. Und muss sie immer befükllen, dass triggert mich.
 
   constructor() { }
 
@@ -18,18 +20,25 @@ export class GameComponent implements OnInit {
     console.log(this.game);
   }
 
-  /**
-   * creates new game object
-   */
-  newGame(){
+  newGame() {
     this.game = new Game();
   }
 
-  /**
-   * sets 'drawingCard' true -> in html appears card; to be more precise the img. With *ngIf
-   */
   takeCard() {
-    this.drawingCard = true;
+
+    if (!this.drawingCard) { // if you arent drawing a card, only then execute the command/function
+
+      this.drawingCard = true; // START animation & drawing phase
+
+      this.currentCard = this.game.stack.pop();
+      console.log(this.currentCard);
+
+      setTimeout(() => {
+        this.drawingCard = false;
+      }, 1500);
+
+    }
+
   }
 
 }

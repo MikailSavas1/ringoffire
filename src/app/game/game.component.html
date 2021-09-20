@@ -9,7 +9,7 @@
         <img (click)="takeCard()" class="card top-card" src="assets/img/cards/card_cover.png">
 
         <!-- drawn card -->
-        <img *ngIf="drawingCard" class="card top-card draw-card" src="assets/img/cards/hearts_1.png">
+        <img *ngIf="drawingCard" class="card top-card draw-card" src="assets/img/cards/{{ currentCard }}.png">
 
     </div>
 
