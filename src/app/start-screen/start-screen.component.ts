@@ -13,6 +13,9 @@ export class StartScreenComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * navigates to game component (routing)
+   */
   newGame(){
     this.router.navigateByUrl('/game');
   }
