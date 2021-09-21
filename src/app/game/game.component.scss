@@ -1,3 +1,8 @@
+.player-panel {
+    position: absolute;
+    right   : 0;
+}
+
 .game-field {
     background-image: url('/assets/img/board.jpg');
     height          : 100vh;
@@ -8,7 +13,6 @@
     justify-content: center;
     align-items    : center;
 }
-
 
 .card-stack {
     position     : relative;
@@ -49,6 +53,6 @@
 }
 
 .played-card {
-    right: -60px;
+    right    : -60px;
     transform: scale(1.1) translate(350px, -350px) rotate(20deg);
 }
