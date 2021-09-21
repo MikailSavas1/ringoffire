@@ -1,6 +1,11 @@
 .player-panel {
     position: absolute;
     right   : 0;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
 }
 
 .game-field {
