@@ -56,14 +56,19 @@ export class GameComponent implements OnInit {
    * array to annother array
    */
   addCardToPlayedStack() {
-    this.game.playedCards.push(this.currentCard!);
+    this.pushIntoArray(this.game.playedCards, this.currentCard);
+  }
+
+  pushIntoArray(array: any[], elementValue: any) {
+    array.push(elementValue);
   }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogAddNewPlayerComponent);
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(nameOfInputfield => {
       console.log('The dialog was closed');
+      this.pushIntoArray(this.game.players, nameOfInputfield);
     });
   }
 

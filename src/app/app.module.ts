@@ -14,6 +14,7 @@ import {MatIconModule} from '@angular/material/icon';
 
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -34,6 +35,7 @@ import {MatInputModule} from '@angular/material/input';
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
+    FormsModule,
     MatInputModule
   ],
   providers: [],
