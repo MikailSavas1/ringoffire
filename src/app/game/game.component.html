@@ -14,12 +14,16 @@
         <img (click)="takeCard()" class="card top-card" src="assets/img/cards/card_cover.png">
 
         <!-- played cards -->
-        <img *ngFor="let playedCard of game.playedCards; let i = index;"
-            src="assets/img/cards/{{ playedCard }}.png" class="card played-card">
+        <img *ngFor="let playedCard of game.playedCards; let i = index;" src="assets/img/cards/{{ playedCard }}.png"
+            class="card played-card">
 
         <!-- drawn card -->
         <img *ngIf="drawingCard" class="card top-card draw-card" src="assets/img/cards/{{ currentCard }}.png">
 
     </div>
+
+    <button mat-fab color="primary" class="btn-add">
+        <mat-icon>add</mat-icon>
+    </button>
 
 </div>
