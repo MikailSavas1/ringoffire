@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Game } from '../models/game';
 
+import { MatDialog } from '@angular/material/dialog';
+import { DialogAddNewPlayerComponent } from '../dialog-add-new-player/dialog-add-new-player.component';
+
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
@@ -10,14 +13,13 @@ export class GameComponent implements OnInit {
 
   drawingCard: boolean = false; // animation
 
-  game: Game = new Game();
-  currentCard = this.game.stack.pop(); // drawn card
+  game: Game;
+  currentCard: string; // drawn card
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.newGame();
-    console.log(this.game);
   }
 
   newGame() {
@@ -45,7 +47,7 @@ export class GameComponent implements OnInit {
    * START animation & drawing phase
    * By setting 'drawingCard' true, the html element appears, because *ngIf="drawingCard". Then the Animation/Keyframe is played.
    */
-  startDrawAnimation(){
+  startDrawAnimation() {
     this.drawingCard = true;
   }
 
@@ -55,6 +57,14 @@ export class GameComponent implements OnInit {
    */
   addCardToPlayedStack() {
     this.game.playedCards.push(this.currentCard!);
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogAddNewPlayerComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
 }
