@@ -1,21 +1,31 @@
-.player-panel{
-    display: flex;
+.player-panel {
+    display    : flex;
     align-items: center;
-    width: 350px;
+
+    width  : 350px;
     padding: 12px;
-    background-color: orange;
+
+    background-color: white;
+    opacity         : 0.5;
 
     border-bottom-left-radius: 10px;
-    border-top-left-radius: 10px;
+    border-top-left-radius   : 10px;
 
-    img{
-        width: 80px;
+    img {
+        width        : 80px;
         border-radius: 100%;
-        object-fit: cover;
+        object-fit   : cover;
     }
 
-    span{
+    span {
         margin-left: 24px;
-        font-size: 32px;
+        font-size  : 32px;
     }
+}
+
+.player-active {
+    border          : 1px solid rgb(255, 191, 0);
+    border-right    : none;
+    background-color: rgb(255, 191, 0, 0.7);
+    opacity: 1;
 }
