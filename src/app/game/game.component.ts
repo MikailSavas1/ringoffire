@@ -32,7 +32,9 @@ export class GameComponent implements OnInit {
 
       this.startDrawAnimation();
 
-      this.currentCard = this.game.stack.pop();
+      this.currentCard = this.game.stack.pop(); // drawing card from stack
+
+      this.nextPlayer();
 
       setTimeout(() => {
         this.drawingCard = false;
@@ -41,6 +43,11 @@ export class GameComponent implements OnInit {
 
     }
 
+  }
+
+  nextPlayer() {
+    this.game.currentPlayer++;
+    this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
   }
 
   /**
