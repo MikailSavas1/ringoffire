@@ -9,7 +9,7 @@
 }
 
 .game-field {
-    background-image: url('/assets/img/board.jpg');
+    background-image: url('/ringoffire/assets/img/board.jpg');
     height          : 100vh;
     width           : 100vw;
     max-width       : 100%;
@@ -24,7 +24,7 @@
     margin-bottom: 200px;
 
     .card {
-        width   : 180px;
+        width   : 130px;
         position: absolute;
     }
 }
@@ -49,17 +49,17 @@
     }
 
     40% {
-        transform: scale(1.1) translate(350px, -350px) rotate(20deg);
+        transform: scale(1.1) translate(300px, -250px) rotate(20deg);
     }
 
     100% {
-        transform: scale(1.1) translate(350px, -350px) rotate(20deg);
+        transform: scale(1.1) translate(300px, -250px) rotate(20deg);
     }
 }
 
 .played-card {
     right    : -60px;
-    transform: scale(1.1) translate(350px, -350px) rotate(20deg);
+    transform: scale(1.1) translate(300px, -250px) rotate(20deg);
 }
 
 .btn-add{
