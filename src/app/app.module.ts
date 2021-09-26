@@ -19,9 +19,8 @@ import { FormsModule } from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
 import { GameCmdComponent } from './game-cmd/game-cmd.component';
 
-
-
-
+import { AngularFireModule } from '@angular/fire/compat';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -41,7 +40,8 @@ import { GameCmdComponent } from './game-cmd/game-cmd.component';
     MatDialogModule,
     FormsModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
+    AngularFireModule.initializeApp(environment.firebase)
   ],
   providers: [],
   bootstrap: [AppComponent]
