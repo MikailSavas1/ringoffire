@@ -25,8 +25,7 @@ export class GameComponent implements OnInit {
     this.newGame();
 
     this.route.params.subscribe((params) => {
-      console.log(params.id);
-
+      // link to firestore database, that loads the data of the ID.
       this.firestore
         .collection('games')
         .doc(params.id)
@@ -43,9 +42,6 @@ export class GameComponent implements OnInit {
 
   newGame() {
     this.game = new Game();
-    /*this.firestore
-      .collection('games')
-      .add(this.game.toJson());*/
   }
 
   takeCard() {
