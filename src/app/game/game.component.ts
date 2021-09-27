@@ -19,19 +19,23 @@ export class GameComponent implements OnInit {
   game: Game;
   currentCard: string; // drawn card
 
+  gameId: string;
+
   constructor(private route: ActivatedRoute, private firestore: AngularFirestore, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.newGame();
 
     this.route.params.subscribe((params) => {
+      this.gameId = params.id;
+
       // link to firestore database, that loads the data of the ID.
       this.firestore
         .collection('games')
         .doc(params.id)
         .valueChanges()
         .subscribe((game: any) => {
-          console.log(`Game ${params.id}`, game);
+          console.log(`Game update`, game);
           this.game.currentPlayer = game.currentPlayer;
           this.game.playedCards = game.playedCards;
           this.game.players = game.players;
@@ -44,6 +48,18 @@ export class GameComponent implements OnInit {
     this.game = new Game();
   }
 
+  /**
+   * updates the object in the firebase database - collection "games"
+   * really important to understand is once its updated the function of onInit -> subscribe is still effected
+   * That inits the game variables, so that runs the game
+   */
+  saveGame() {
+    this.firestore
+      .collection('games')
+      .doc(this.gameId)
+      .update(this.game.toJson());
+  }
+
   takeCard() {
 
     if (!this.drawingCard) { // if you arent drawing a card, only then you can draw
@@ -51,12 +67,14 @@ export class GameComponent implements OnInit {
       this.startDrawAnimation();
 
       this.currentCard = this.game.stack.pop(); // drawing card from stack
+      this.saveGame();
 
       this.nextPlayer();
 
       setTimeout(() => {
         this.drawingCard = false;
         this.addCardToPlayedStack();
+        this.saveGame();
       }, 1000);
 
     }
@@ -66,6 +84,7 @@ export class GameComponent implements OnInit {
   nextPlayer() {
     this.game.currentPlayer++;
     this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
+    this.saveGame();
   }
 
   /**
@@ -95,6 +114,7 @@ export class GameComponent implements OnInit {
       console.log('The dialog was closed');
       if (nameOfInputfield && nameOfInputfield.length > 0)
         this.pushIntoArray(this.game.players, nameOfInputfield);
+        this.saveGame();
     });
   }
 }
