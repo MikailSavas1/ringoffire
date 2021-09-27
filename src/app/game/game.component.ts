@@ -14,11 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class GameComponent implements OnInit {
 
-  drawingCard: boolean = false; // animation
-
   game: Game;
-  currentCard: string; // drawn card
-
   gameId: string;
 
   constructor(private route: ActivatedRoute, private firestore: AngularFirestore, public dialog: MatDialog) { }
@@ -40,6 +36,8 @@ export class GameComponent implements OnInit {
           this.game.playedCards = game.playedCards;
           this.game.players = game.players;
           this.game.stack = game.stack;
+          this.game.currentCard = game.currentCard;
+          this.game.drawingCard = game.drawingCard;
         })
     })
   }
@@ -62,17 +60,17 @@ export class GameComponent implements OnInit {
 
   takeCard() {
 
-    if (!this.drawingCard) { // if you arent drawing a card, only then you can draw
+    if (!this.game.drawingCard) { // if you arent drawing a card, only then you can draw
 
       this.startDrawAnimation();
 
-      this.currentCard = this.game.stack.pop(); // drawing card from stack
+      this.game.currentCard = this.game.stack.pop(); // drawing card from stack
       this.saveGame();
 
       this.nextPlayer();
 
       setTimeout(() => {
-        this.drawingCard = false;
+        this.game.drawingCard = false;
         this.addCardToPlayedStack();
         this.saveGame();
       }, 1000);
@@ -89,18 +87,18 @@ export class GameComponent implements OnInit {
 
   /**
    * START animation & drawing phase
-   * By setting 'drawingCard' true, the html element appears, because *ngIf="drawingCard". Then the Animation/Keyframe is played.
+   * By setting 'game.drawingCard' true, the html element appears, because *ngIf="game.drawingCard". Then the Animation/Keyframe is played.
    */
   startDrawAnimation() {
-    this.drawingCard = true;
+    this.game.drawingCard = true;
   }
 
   /**
-   * Adds the drawn currentCard to the playedCards stack
+   * Adds the drawn game.currentCard to the playedCards stack
    * array to annother array
    */
   addCardToPlayedStack() {
-    this.pushIntoArray(this.game.playedCards, this.currentCard);
+    this.pushIntoArray(this.game.playedCards, this.game.currentCard);
   }
 
   pushIntoArray(array: any[], elementValue: any) {

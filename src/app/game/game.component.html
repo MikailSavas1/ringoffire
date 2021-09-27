@@ -18,7 +18,7 @@
             class="card played-card">
 
         <!-- drawn card -->
-        <img *ngIf="drawingCard" class="card top-card draw-card" src="assets/img/cards/{{ currentCard }}.png">
+        <img *ngIf="game.drawingCard" class="card top-card draw-card" src="assets/img/cards/{{ game.currentCard }}.png">
 
     </div>
 
@@ -28,4 +28,4 @@
 
 </div>
 
-<app-game-cmd class="cmd-card" [card]="currentCard"></app-game-cmd>
+<app-game-cmd class="cmd-card" [card]="game.currentCard"></app-game-cmd>
