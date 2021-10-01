@@ -38,6 +38,7 @@ export class GameComponent implements OnInit {
           this.game.stack = game.stack;
           this.game.currentCard = game.currentCard;
           this.game.drawingCard = game.drawingCard;
+          this.game.nonePlayerRegistered = game.nonePlayerRegistered;
         })
     })
   }
@@ -60,21 +61,25 @@ export class GameComponent implements OnInit {
 
   takeCard() {
 
-    if (!this.game.drawingCard) { // if you arent drawing a card, only then you can draw
+    if (!this.game.nonePlayerRegistered) {
 
-      this.startDrawAnimation();
+      if (!this.game.drawingCard) { // if you arent drawing a card, only then you can draw
 
-      this.game.currentCard = this.game.stack.pop(); // drawing card from stack
-      this.saveGame();
+        this.startDrawAnimation();
 
-      this.nextPlayer();
-
-      setTimeout(() => {
-        this.game.drawingCard = false;
-        this.addCardToPlayedStack();
+        this.game.currentCard = this.game.stack.pop(); // drawing card from stack
         this.saveGame();
-      }, 1000);
 
+        this.nextPlayer();
+
+        setTimeout(() => {
+          this.game.drawingCard = false;
+          this.addCardToPlayedStack();
+          this.saveGame();
+        }, 1000);
+      }
+    } else {
+      console.log('Please add a player');
     }
 
   }
@@ -112,7 +117,9 @@ export class GameComponent implements OnInit {
       console.log('The dialog was closed');
       if (nameOfInputfield && nameOfInputfield.length > 0)
         this.pushIntoArray(this.game.players, nameOfInputfield);
-        this.saveGame();
+      this.saveGame();
+      this.game.nonePlayerRegistered = false;
+      this.saveGame();
     });
   }
 }

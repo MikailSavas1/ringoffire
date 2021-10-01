@@ -5,6 +5,8 @@ export class Game {
     public currentPlayer: number = 0;
 
     public drawingCard: boolean = false; // animation
+    public nonePlayerRegistered: boolean = true;
+
     public currentCard: string = ''; // drawn card
 
     constructor() {
@@ -24,7 +26,8 @@ export class Game {
             playedCards: this.playedCards,
             currentPlayer: this.currentPlayer,
             drawingCard: this.drawingCard,
-            currentCard: this.currentCard
+            currentCard: this.currentCard,
+            nonePlayerRegistered: this.nonePlayerRegistered
         }
     }
 }
