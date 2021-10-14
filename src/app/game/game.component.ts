@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Game } from '../models/game';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -6,6 +6,8 @@ import { DialogAddNewPlayerComponent } from '../dialog-add-new-player/dialog-add
 
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
+import { EditProfileComponent } from '../edit-profile/edit-profile.component';
+import { SaveService } from '../save.service';
 
 @Component({
   selector: 'app-game',
@@ -14,14 +16,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class GameComponent implements OnInit {
 
-  game: Game;
+  public game: Game;
   gameId: string;
+  gameOver: boolean = false;
 
-  constructor(private route: ActivatedRoute, private firestore: AngularFirestore, public dialog: MatDialog) { }
+  constructor(private route: ActivatedRoute, private firestore: AngularFirestore, public dialog: MatDialog, private router: Router, public saveserv: SaveService) { }
 
   ngOnInit(): void {
+    
     this.newGame();
 
+    // activated-route parameter
     this.route.params.subscribe((params) => {
       this.gameId = params.id;
 
@@ -39,7 +44,10 @@ export class GameComponent implements OnInit {
           this.game.currentCard = game.currentCard;
           this.game.drawingCard = game.drawingCard;
           this.game.nonePlayerRegistered = game.nonePlayerRegistered;
-        })
+        },
+          (error) => {
+            console.log(error);
+          })
     })
   }
 
@@ -61,33 +69,37 @@ export class GameComponent implements OnInit {
 
   takeCard() {
 
-    if (!this.game.nonePlayerRegistered) {
-
-      if (!this.game.drawingCard) { // if you arent drawing a card, only then you can draw
-
-        this.startDrawAnimation();
-
-        this.game.currentCard = this.game.stack.pop(); // drawing card from stack
-        this.saveGame();
-
-        this.nextPlayer();
-
-        setTimeout(() => {
-          this.game.drawingCard = false;
-          this.addCardToPlayedStack();
-          this.saveGame();
-        }, 1000);
-      }
-    } else {
+    if (this.game.nonePlayerRegistered) {
+      this.openDialog();
       console.log('Please add a player');
+    } else {
+      if (!this.gameisOver()) {
+        if (!this.game.drawingCard) { // if you arent drawing a card, only then you can draw
+          this.startDrawAnimation();
+          this.game.currentCard = this.game.stack.pop(); // drawing card from stack
+          // this.saveGame();
+          this.nextPlayer();
+          this.saveserv.saveGame(this.gameId, this.game);
+          setTimeout(() => {
+            this.game.drawingCard = false;
+            this.addCardToPlayedStack();
+            this.saveGame();
+          }, 1000);
+        }
+      } else {
+        this.gameOver = true;
+        this.router.navigateByUrl('/end-screen');
+      }
     }
+  }
 
+  gameisOver(): boolean {
+    return this.game.stack.length == 0;
   }
 
   nextPlayer() {
     this.game.currentPlayer++;
     this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
-    this.saveGame();
   }
 
   /**
@@ -115,11 +127,34 @@ export class GameComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((nameOfInputfield: string) => {
       console.log('The dialog was closed');
-      if (nameOfInputfield && nameOfInputfield.length > 0)
+      if (nameOfInputfield && nameOfInputfield.length > 0) {
         this.pushIntoArray(this.game.players, nameOfInputfield);
-      this.saveGame();
-      this.game.nonePlayerRegistered = false;
-      this.saveGame();
+        // this.saveGame();
+        this.game.nonePlayerRegistered = false;
+        this.saveGame();
+      }
+    });
+  }
+
+  editProfile(indexNo: number) {
+    console.log(this.game.players[indexNo] + ` wurde ausgewählt`);
+    const dialogRef = this.dialog.open(EditProfileComponent);
+    dialogRef.componentInstance.currentGame = this.game;
+    dialogRef.afterClosed().subscribe((change: any) => {
+      if (change == "delete") {
+        if (this.game.currentPlayer > 0 && indexNo < this.game.currentPlayer) {
+          this.game.currentPlayer--;
+        }
+        if (this.game.currentPlayer == (this.game.players.length - 1)) {
+          this.game.currentPlayer = 0;
+        }
+        this.game.players.splice(indexNo, 1);
+        if (this.game.players.length == 0) {
+          this.game.nonePlayerRegistered = true;
+          this.game.currentPlayer = 0;
+        }
+        this.saveGame();
+      }
     });
   }
 }

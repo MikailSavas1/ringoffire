@@ -4,20 +4,17 @@ import { Router } from '@angular/router';
 import { Game } from '../models/game';
 
 @Component({
-  selector: 'app-start-screen',
-  templateUrl: './start-screen.component.html',
-  styleUrls: ['./start-screen.component.scss']
+  selector: 'app-end-screen',
+  templateUrl: './end-screen.component.html',
+  styleUrls: ['./end-screen.component.scss']
 })
-export class StartScreenComponent implements OnInit {
+export class EndScreenComponent implements OnInit {
 
   constructor(private firestore: AngularFirestore, private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  /**
-   * navigates to game component (routing)
-   */
   newGame() {
     let game = new Game();
     this.firestore

@@ -8,6 +8,10 @@
     justify-content: center;
     align-items    : center;
 
+    @media (max-width: 1115px) {
+        overflow: hidden;
+    }
+
     .image-container {
         position: relative;
 
@@ -21,6 +25,11 @@
             bottom  : 131px;
             left    : 300px;
             cursor  : pointer;
+
+            @media (max-width: 1115px) {
+                height: 115px;
+    bottom: 230px;
+            }
 
             &:hover {
                 filter: brightness(1.2);

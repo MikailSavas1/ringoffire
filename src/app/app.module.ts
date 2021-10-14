@@ -21,6 +21,8 @@ import { GameCmdComponent } from './game-cmd/game-cmd.component';
 
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from '../environments/environment';
+import { EndScreenComponent } from './end-screen/end-screen.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { environment } from '../environments/environment';
     GameComponent,
     PlayerComponent,
     DialogAddNewPlayerComponent,
-    GameCmdComponent
+    GameCmdComponent,
+    EndScreenComponent,
+    EditProfileComponent
   ],
   imports: [
     BrowserModule,

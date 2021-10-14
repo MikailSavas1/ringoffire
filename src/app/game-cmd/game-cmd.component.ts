@@ -8,8 +8,8 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
 export class GameCmdComponent implements OnInit, OnChanges {
 
   @Input() card: string;
-  title: string;
-  description: string;
+  public title: string;
+  public description: string;
 
   constructor() { }
 
